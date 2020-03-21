@@ -1,0 +1,41 @@
+version: '3.7'
+services:
+  products-order-example:
+    container_name: products-order-example
+    build:
+      context: .
+      dockerfile: service-dockerfile
+      labels:
+        maintainer: "romanowski.it"
+    image: products-order-example:latest
+    ports:
+      - "8090:8090"
+    depends_on:
+      - docker-mariadb
+    restart: on-failure
+    environment:
+      SPRING_PROFILES_ACTIVE: default,docker
+    networks:
+      product-example-network:
+        ipv4_address: 192.168.100.110
+  docker-mariadb:
+    container_name: docker-mariadb
+    image: mariadb:10.5.1
+    environment:
+      - MYSQL_ROOT_PASSWORD=mypw
+      - MYSQL_USER=localuser
+      - MYSQL_PASSWORD=localpassword
+      - MYSQL_DATABASE=local-db
+    networks:
+      product-example-network:
+        ipv4_address: 192.168.100.101
+
+
+networks:
+  product-example-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: 192.168.100.100/24
