@@ -7,10 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductService {
@@ -32,6 +29,13 @@ public class ProductService {
         CollectionUtils.addAll(products, productRepository.findAll());
         return products;
     }
+
+    public Collection<Product> getAllByIds(Set<Long> productIds) {
+        List<Product> products = new ArrayList<>();
+        CollectionUtils.addAll(products, productRepository.findAllById(productIds));
+        return products;
+    }
+
 
     public Product saveProduct(Product product) {
         return productRepository.save(product);

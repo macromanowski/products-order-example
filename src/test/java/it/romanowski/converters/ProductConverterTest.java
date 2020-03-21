@@ -38,7 +38,6 @@ class ProductConverterTest {
         Product result = ProductConverter.convert(request);
 
         //assert
-        Assertions.assertThat(result.getId()).isNull();
         Assertions.assertThat(result.getName()).isEqualTo("example");
         Assertions.assertThat(result.getPrice()).isEqualTo(BigDecimal.ONE);
     }
